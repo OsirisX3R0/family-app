@@ -9,7 +9,8 @@
     "express": "^4.17.1"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "heroku-postbuild": "cd client && yarn && yarn build"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
