@@ -1,0 +1,8 @@
+{
+    "mongoDb": {
+        "connectionString": "@ds163254.mlab.com:63254/heroku_1llxhthc",
+        "user": "osiris91689",
+        "pass": "Os129168912!@"
+    }
+}
+

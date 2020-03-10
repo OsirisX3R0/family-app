@@ -1,11 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const path = require('path');
+const config = require('./config.json');
 //const coors = require('cors');
 const port = process.env.PORT || 5000;
 
 const app = express();
 
+mongoose.connect(
+    `mongodb://${config.mongoDb.user}:${encodeURIComponent(config.mongoDb.pass)}${config.mongoDb.connectionString}`, 
+    { 
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cors);
