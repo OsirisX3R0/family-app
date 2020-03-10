@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cors);
 
-app.use('/api', groceryRoutes);
+app.use('/api/groceries', groceryRoutes);
 // app.get('/api/chicken', (req, res) => {
 //     res.send("Bawk bawk");
 // })

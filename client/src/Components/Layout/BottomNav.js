@@ -1,14 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavItem, NavLink } from 'reactstrap'
 
 const BottomNav = () => (
     <Navbar color="light" className="bottom-nav">
         <Nav>
             <NavItem>
-                <NavLink href="">Meals</NavLink>
+                <Link to="/meals">Meals</Link>
             </NavItem>
             <NavItem>
-                <NavLink href="">Groceries</NavLink>
+                <Link to="/groceries">Groceries</Link>
             </NavItem>
         </Nav>
     </Navbar>
