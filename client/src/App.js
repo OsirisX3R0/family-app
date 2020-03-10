@@ -4,16 +4,20 @@ import './App.css';
 import axios from 'axios';
 
 function App() {
-  const [chicken, setChicken] = useState('');
+  const [types, setTypes] = useState([]);
   useEffect(() => {
-    getChicken().then(res => setChicken(res.data));
+    getTypes().then(res => {
+      setTypes(res.data)
+    });
   }, [])
 
-  const getChicken = () => axios.get('api/chicken');
+  const getTypes = () => axios.get('api/groceryTypes');
 
   return (
     <div className="App">
-      {chicken}
+      <ul>
+        {types.map(type => <li key={type._id}>{type.name}</li>)}
+      </ul>
     </div>
   );
 }

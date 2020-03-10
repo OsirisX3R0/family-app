@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+
+const groceryRoutes = require('./api/routes/groceries');
 const config = require('./config.json');
 //const coors = require('cors');
 const port = process.env.PORT || 5000;
@@ -18,9 +20,10 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cors);
 
-app.get('/api/chicken', (req, res) => {
-    res.send("Bawk bawk");
-})
+app.use('/api', groceryRoutes);
+// app.get('/api/chicken', (req, res) => {
+//     res.send("Bawk bawk");
+// })
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client/build/index.html'));
