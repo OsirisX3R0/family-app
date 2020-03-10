@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-//import logo from './logo.svg';
-import './App.css';
 import axios from 'axios';
+import './App.scss';
+import Layout from './Components/Layout/Layout';
+import 'bootswatch/dist/minty/bootstrap.css'
 
 function App() {
   const [types, setTypes] = useState([]);
@@ -14,11 +15,11 @@ function App() {
   const getTypes = () => axios.get('api/groceryTypes');
 
   return (
-    <div className="App">
+    <Layout>
       <ul>
         {types.map(type => <li key={type._id}>{type.name}</li>)}
       </ul>
-    </div>
+    </Layout>
   );
 }
 
