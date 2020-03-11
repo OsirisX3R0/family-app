@@ -6,4 +6,4 @@ let grocerySchema = new mongoose.Schema({
     type: { type: mongoose.Schema.Types.ObjectId, ref: 'GroceryType' }
 })
 
-module.exports = mongoose.model("Grocery", grocerySchema);
+module.exports = mongoose.model("Groceries", grocerySchema);

@@ -21,9 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cors);
 
 app.use('/api/groceries', groceryRoutes);
-// app.get('/api/chicken', (req, res) => {
-//     res.send("Bawk bawk");
-// })
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client/build/index.html'));
