@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
     });
     console.log(req.body)
     newGrocery = await newGrocery.save();
-    //res.status(201).send(newGrocery);
+    res.json(newGrocery);
 })
 
 module.exports = router;
