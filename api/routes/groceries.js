@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Groceries = require('../models/groceries/Groceries.js');
 const GroceryType = require('../models/groceries/GroceryType.js');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 // Get grocery list
 router.get('/', async (req, res) => {
-    let groceryList = await Groceries.find({});
+    let groceryList = await Groceries.find({})
+        .populate('category');
     // .aggregate()
     // .match({})
     // .group({ _id: "$type", "total": { $sum: "$price" } })
@@ -21,9 +23,14 @@ router.get('/groceryTypes', async (req, res) => {
 
 // Add a grocery item
 router.post('/', async (req, res) => {
-    let newGrocery = new Groceries(req.body);
-    await newGrocery.save();
-    res.status(201).json(newGrocery);
+    let newGrocery = new Groceries({
+        name: req.body.name,
+        price: req.body.price,
+        category: ObjectId(req.body.category)
+    });
+    console.log(req.body)
+    newGrocery = await newGrocery.save();
+    //res.status(201).send(newGrocery);
 })
 
 module.exports = router;

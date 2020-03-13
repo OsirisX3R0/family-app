@@ -9,15 +9,17 @@ const config = require('./config.json');
 const port = process.env.PORT || 5000;
 
 const app = express();
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+//app.use(express.json())
 
 mongoose.connect(
     `mongodb://${config.mongoDb.user}:${encodeURIComponent(config.mongoDb.pass)}${config.mongoDb.connectionString}`, 
     { 
         useNewUrlParser: true,
         useUnifiedTopology: true
-    })
-app.use(express.static(path.join(__dirname, 'client/build')));
-app.use(bodyParser.urlencoded({ extended: false }));
+    });
 //app.use(cors);
 
 app.use('/api/groceries', groceryRoutes);

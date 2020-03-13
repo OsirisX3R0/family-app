@@ -22,7 +22,9 @@ const GroceryList = () => {
             })
 
         getGroceryList()
-            .then(res => setGroceryList(res.data));
+            .then(res => {
+                setGroceryList(res.data)
+            });
     }, [])
 
     const addNew = (e) => {
@@ -42,7 +44,7 @@ const GroceryList = () => {
 
     return (
         <>
-            <h2 >Type</h2>
+            <h2>Type</h2>
             <Form onSubmit={addNew}>
                 <Row form>
                     <Col>
@@ -77,82 +79,27 @@ const GroceryList = () => {
                 
             </Form>
             <ListGroup>
-                <ListGroupItem>
-                    <Row>
-                        <Col xs="1">
-                            <Label check>
-                                <CustomInput id="item1" type="checkbox" />
-                            </Label>
-                        </Col>
-                        <Col >Apples</Col>
-                        <Col  className="text-right"><sup>$</sup>1.59</Col>
-                        <Col xs="auto">
-                            <Button color="warning" size="sm" outline className="mr-2">
-                                <FontAwesomeIcon icon={faPencilAlt} />
-                            </Button>
-                            <Button color="danger" size="sm" outline>
-                                <FontAwesomeIcon icon={faTimes} />
-                            </Button>
-                        </Col>
-                    </Row>
-                </ListGroupItem>
-                <ListGroupItem>
-                    <Row>
-                        <Col xs="1">
-                            <Label check>
-                                <CustomInput id="item1" type="checkbox" />
-                            </Label>
-                        </Col>
-                        <Col >Apples</Col>
-                        <Col  className="text-right"><sup>$</sup>1.59</Col>
-                        <Col xs="auto">
-                            <Button color="warning" size="sm" outline className="mr-2">
-                                <FontAwesomeIcon icon={faPencilAlt} />
-                            </Button>
-                            <Button color="danger" size="sm" outline>
-                                <FontAwesomeIcon icon={faTimes} />
-                            </Button>
-                        </Col>
-                    </Row>
-                </ListGroupItem>
-                <ListGroupItem>
-                    <Row>
-                        <Col xs="1">
-                            <Label check>
-                                <CustomInput id="item1" type="checkbox" />
-                            </Label>
-                        </Col>
-                        <Col >Apples</Col>
-                        <Col  className="text-right"><sup>$</sup>1.59</Col>
-                        <Col xs="auto">
-                            <Button color="warning" size="sm" outline className="mr-2">
-                                <FontAwesomeIcon icon={faPencilAlt} />
-                            </Button>
-                            <Button color="danger" size="sm" outline>
-                                <FontAwesomeIcon icon={faTimes} />
-                            </Button>
-                        </Col>
-                    </Row>
-                </ListGroupItem>
-                <ListGroupItem>
-                    <Row>
-                        <Col xs="1">
-                            <Label check>
-                                <CustomInput id="item1" type="checkbox" />
-                            </Label>
-                        </Col>
-                        <Col >Apples</Col>
-                        <Col  className="text-right"><sup>$</sup>1.59</Col>
-                        <Col xs="auto">
-                            <Button color="warning" size="sm" outline className="mr-2">
-                                <FontAwesomeIcon icon={faPencilAlt} />
-                            </Button>
-                            <Button color="danger" size="sm" outline>
-                                <FontAwesomeIcon icon={faTimes} />
-                            </Button>
-                        </Col>
-                    </Row>
-                </ListGroupItem>
+                {groceryList.map(grocery => (
+                    <ListGroupItem key={grocery._id}>
+                        <Row>
+                            <Col xs="1">
+                                <Label check>
+                                    <CustomInput id="item1" type="checkbox" />
+                                </Label>
+                            </Col>
+                            <Col>{grocery.name}</Col>
+                            <Col  className="text-right"><sup>$</sup>{grocery.price}</Col>
+                            <Col xs="auto">
+                                <Button color="warning" size="sm" outline className="mr-2">
+                                    <FontAwesomeIcon icon={faPencilAlt} />
+                                </Button>
+                                <Button color="danger" size="sm" outline>
+                                    <FontAwesomeIcon icon={faTimes} />
+                                </Button>
+                            </Col>
+                        </Row>
+                    </ListGroupItem>
+                ))}
             </ListGroup>
         </>
     )
