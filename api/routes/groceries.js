@@ -26,11 +26,13 @@ router.post('/', async (req, res) => {
     let newGrocery = new Groceries({
         name: req.body.name,
         price: req.body.price,
-        category: ObjectId(req.body.category)
+        category: new ObjectId(req.body.category)
     });
-    console.log(req.body)
-    newGrocery = await newGrocery.save();
-    res.json(newGrocery);
+    //console.log(req.body)
+    newGrocery.save(err => {
+        if (err) return err;
+    });
+    res.json(newGrocery/*.populate('category')*/);
 })
 
 module.exports = router;
