@@ -23,16 +23,17 @@ router.get('/groceryTypes', async (req, res) => {
 
 // Add a grocery item
 router.post('/', async (req, res) => {
+    //let newGrocery = await Groceries.create(req.body);
     let newGrocery = new Groceries({
         name: req.body.name,
         price: req.body.price,
         category: new ObjectId(req.body.category)
     });
     //console.log(req.body)
-    newGrocery.save(err => {
-        if (err) return err;
-    });
-    res.json(newGrocery/*.populate('category')*/);
+    // newGrocery.save(err => {
+    //     if (err) return err;
+    // });
+    return res.status(201).json(newGrocery/*.populate('category')*/);
 })
 
 module.exports = router;

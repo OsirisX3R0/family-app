@@ -11,10 +11,12 @@
     "mongoose": "^5.9.4"
   },
   "scripts": {
-    "start": "nodemon",
-    "dev": "concurrently \"yarn start\" \"cd client && yarn start\"",
+    "start": "node",
+    "server": "nodemon",
+    "client": "cd client && yarn start",
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
     "heroku-postbuild": "cd client && yarn && yarn build",
-    "debug": "node --nolazy --inspect-brk=5000 index.js"
+    "debug": "nodemon --nolazy --inspect-brk=5000 index.js"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
