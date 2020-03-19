@@ -30,7 +30,8 @@
             "runtimeExecutable": "npm",
             "runtimeArgs": [
                 "run-script",
-                "debug"
+                "debug",
+                "client"
             ],
             "port": 5000,
             "skipFiles": [
