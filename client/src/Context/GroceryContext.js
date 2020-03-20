@@ -37,7 +37,7 @@ export const GroceryProvider = ({ children }) => {
     useEffect(() => {
         setLoadingGroceries(true);
 
-        getGroceryTypes()
+        let $groceryTypes = getGroceryTypes()
             .then(res => {
                 setGroceryTypes(res.data);
                 dispatchNewItem({
@@ -50,11 +50,23 @@ export const GroceryProvider = ({ children }) => {
                 })
             });
 
-        getGroceryList()
+        let $groceryList = getGroceryList()
             .then(res => {
                 dispatchGroceries({type: 'SET_GROCERY_LIST', list: res.data})
             })
             .finally(() => setLoadingGroceries(false));
+
+        // Promise.all([$groceryTypes, $groceryList])
+        //     .then(res => {
+        //         let sortedList = [];
+        //         groceryTypes.forEach(type => {
+        //             sortedList.push({
+        //                 name: type.name,
+        //                 items: groceryList.filter(g => g.category == type.name)
+        //             })
+        //         })
+        //         dispatchGroceries({type: 'SET_GROCERY_LIST', list: sortedList})
+        //     })
     }, [])
 
     return (

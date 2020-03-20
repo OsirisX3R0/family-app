@@ -42,13 +42,13 @@ const NewGroceryItem = () => {
     return (
         <Form onSubmit={addNew}>
                 <Row form>
-                    <Col>
+                    <Col md="12" className="col">
                         <FormGroup>
                             <Label>Name</Label>
                             <Input type="text" name="name" onChange={updateNew} />
                         </FormGroup>
                     </Col>
-                    <Col>
+                    <Col md="12" className="col">
                         <FormGroup>
                             <Label>Category</Label>
                             <Input type="select" name="category" onChange={updateNew}>
@@ -58,15 +58,21 @@ const NewGroceryItem = () => {
                             </Input>
                         </FormGroup>
                     </Col>
-                    <Col>
+                    <Col md="12" className="col">
                         <FormGroup>
                             <Label>Price</Label>
                             <Input type="number" name="price" step="0.01" onChange={updateNew} />
                         </FormGroup>
                     </Col>
-                    <Col xs="auto" className="d-flex align-items-center">
+                    <Col xs="auto" className="d-flex d-md-none align-items-center">
                         <Button color="success">
                             <FontAwesomeIcon icon={faPlus} />
+                        </Button>
+                    </Col>
+                    <Col className="d-none d-md-block">
+                        <Button color="success" block>
+                            <FontAwesomeIcon icon={faPlus} />
+                            Add
                         </Button>
                     </Col>
                 </Row>

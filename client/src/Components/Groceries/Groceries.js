@@ -62,10 +62,15 @@ const Groceries = () => {
 
     return (
         <>
-            {/* <h2>Type</h2> */}
-            <GroceryProvider>                
-                <NewGroceryItem />
-                <GroceryList />
+            <GroceryProvider>
+                <Row>
+                    <Col md="3" className="col-md-push-9">
+                        <NewGroceryItem />
+                    </Col>
+                    <Col md="9" className="col-md-pull-3">
+                        <GroceryList />
+                    </Col>
+                </Row>
             </GroceryProvider>
         </>
     )
