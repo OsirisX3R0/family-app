@@ -18,6 +18,7 @@ mongoose.connect(
     `mongodb://${config.mongoDb.user}:${encodeURIComponent(config.mongoDb.pass)}${config.mongoDb.connectionString}`, 
     { 
         useNewUrlParser: true,
+        useFindAndModify: false,
         useUnifiedTopology: true
     });
 //app.use(cors);

@@ -18,6 +18,10 @@ export const addGrocery = item => {
     return axios.post(url, item);
 }
 
+export const updateGroceryItem = item => {
+    return axios.put(`${url}/${item._id}`, item)
+}
+
 export const deleteGrocery = id => {
     return axios.delete(`${url}/${id}`);
 }

@@ -10,10 +10,6 @@ router.get('/', async (req, res) => {
         if (err) res.send(err);
     })
     .populate('category');
-    // .aggregate()
-    // .match({})
-    // .group({ _id: "$type", "total": { $sum: "$price" } })
-    // .project({});
     res.json(groceryList);
 })
 
@@ -21,8 +17,6 @@ router.get('/', async (req, res) => {
 router.get('/groceryTypes', async (req, res) => {        
     let groceryTypes = await GroceryType.find({}, (err, groceries) => {
         if (err) res.send(err);
-        
-        //groceries.populate('category');
     });
     res.json(groceryTypes);
 })
@@ -35,9 +29,20 @@ router.post('/', async (req, res) => {
         category: new ObjectId(req.body.category)
     });
     newGrocery = await newGrocery.populate('category').execPopulate()
-    await newGrocery.save()
+    await newGrocery.save();
     
     return res.status(201).json(newGrocery);
+})
+
+// Update a grocery item
+router.put('/:id', async (req, res) => {
+    let updatedItem = Groceries.findByIdAndUpdate({ _id: req.body._id }, req.body).exec((err) => {
+        if (err) res.send(err)
+
+        return res.send(updatedItem);
+    })
+
+    //await updatedItem.save()
 })
 
 // Delete a grocery item
