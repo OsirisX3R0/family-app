@@ -13,7 +13,7 @@ const GroceryList = () => {
     return (
         <BlockUI blocking={loadingGroceries} loader={<Loader />}>
             <ListGroup>
-                {groceryList.map(grocery => (
+                {groceryList && groceryList.map(grocery => (
                     <GroceryItem grocery={grocery} key={grocery._id} />
                     // <ListGroupItem key={grocery._id}>
                     //     <Row>

@@ -12,6 +12,7 @@ const GroceryItem = ({ grocery }) => {
     const [editing, setEditing] = useState(false);
 
     const displayItem = () => {
+        let price = +grocery.price;
         if (editing) {
             return (
                 <>
@@ -21,7 +22,7 @@ const GroceryItem = ({ grocery }) => {
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>$</InputGroupText>
                             </InputGroupAddon>
-                            <Input value={grocery.price} name="price" onChange={updateItem} />
+                            <Input type="number" value={price} step="0.01" name="price" onChange={updateItem} />
                         </InputGroup>                        
                     </Col>
                 </>
@@ -31,7 +32,7 @@ const GroceryItem = ({ grocery }) => {
         return (
             <>
                 <Col>{grocery.name}</Col>
-                <Col className="text-right"><sup>$</sup>{grocery.price}</Col>
+                <Col className="text-right"><sup>$</sup>{price.toFixed(2)}</Col>
             </>
         )
     }
