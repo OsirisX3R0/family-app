@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { Label, Button, ListGroupItem, Row, Col, CustomInput } from 'reactstrap';
+import React, { useState, useContext } from 'react';
+import { Label, Button, ListGroupItem, Row, Col, Input, CustomInput, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTimes, faTrash, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { GroceryContext } from '../../Context/GroceryContext';
 import { deleteGrocery } from '../../Services/groceryService';
 const GroceryItem = ({ grocery }) => {
@@ -9,6 +9,7 @@ const GroceryItem = ({ grocery }) => {
         setLoadingGroceries,
         dispatchGroceries
      } = useContext(GroceryContext);
+     const [editing, setEditing] = useState(false);
 
     const removeItem = id => {
         setLoadingGroceries(true);
@@ -23,6 +24,57 @@ const GroceryItem = ({ grocery }) => {
             .finally(() => setLoadingGroceries(false))
     }
 
+    const displayItem = () => {
+        if (editing) {
+            return (
+                <>
+                    <Col><Input value={grocery.name} /></Col>
+                    <Col className="text-right">
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>$</InputGroupText>
+                            </InputGroupAddon>
+                            <Input value={grocery.price} />
+                        </InputGroup>                        
+                    </Col>
+                </>
+            )
+        }
+
+        return (
+            <>
+                <Col>{grocery.name}</Col>
+                <Col className="text-right"><sup>$</sup>{grocery.price}</Col>
+            </>
+        )
+    }
+
+    const displayActions = () => {
+        if (editing) {
+            return (
+                <>
+                    <Button color="success" size="sm" outline className="mr-2">
+                        <FontAwesomeIcon icon={faCheck} />
+                    </Button>
+                    <Button color="danger" size="sm" outline  onClick={() => setEditing(false)}>
+                        <FontAwesomeIcon icon={faTimes} />
+                    </Button>
+                </>
+            )
+        }
+
+        return (
+            <>
+                <Button color="warning" size="sm" outline className="mr-2" onClick={() => setEditing(true)}>
+                    <FontAwesomeIcon icon={faPencilAlt} />
+                </Button>
+                <Button color="danger" size="sm" outline onClick={() => removeItem(grocery._id)}>
+                    <FontAwesomeIcon icon={faTrash} />
+                </Button>
+            </>
+        )
+    }
+
     return (
         <ListGroupItem key={grocery._id}>
             <Row>
@@ -31,15 +83,9 @@ const GroceryItem = ({ grocery }) => {
                         <CustomInput id="item1" type="checkbox" />
                     </Label>
                 </Col>
-                <Col>{grocery.name}</Col>
-                <Col  className="text-right"><sup>$</sup>{grocery.price}</Col>
+                {displayItem()}
                 <Col xs="auto">
-                    <Button color="warning" size="sm" outline className="mr-2">
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                    </Button>
-                    <Button color="danger" size="sm" outline onClick={() => removeItem(grocery._id)}>
-                        <FontAwesomeIcon icon={faTimes} />
-                    </Button>
+                    {displayActions()}
                 </Col>
             </Row>
         </ListGroupItem>
