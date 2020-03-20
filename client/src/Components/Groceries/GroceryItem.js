@@ -9,32 +9,19 @@ const GroceryItem = ({ grocery }) => {
         setLoadingGroceries,
         dispatchGroceries
      } = useContext(GroceryContext);
-     const [editing, setEditing] = useState(false);
-
-    const removeItem = id => {
-        setLoadingGroceries(true);
-
-        deleteGrocery(id)
-            .then(res => {
-                dispatchGroceries({
-                    type: 'DELETE_GROCERY_ITEM',
-                    id: res.data
-                })
-            })
-            .finally(() => setLoadingGroceries(false))
-    }
+    const [editing, setEditing] = useState(false);
 
     const displayItem = () => {
         if (editing) {
             return (
                 <>
-                    <Col><Input value={grocery.name} /></Col>
+                    <Col><Input value={grocery.name} name="name" onChange={updateItem} /></Col>
                     <Col className="text-right">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>$</InputGroupText>
                             </InputGroupAddon>
-                            <Input value={grocery.price} />
+                            <Input value={grocery.price} name="price" onChange={updateItem} />
                         </InputGroup>                        
                     </Col>
                 </>
@@ -49,11 +36,31 @@ const GroceryItem = ({ grocery }) => {
         )
     }
 
+    const updateItem = e => {
+        dispatchGroceries({ type: 'UPDATE_GROCERY_ITEM', item: {
+            ...grocery,
+            [e.target.name]: e.target.value
+        }})
+    }
+
+    const removeItem = id => {
+        setLoadingGroceries(true);
+
+        deleteGrocery(id)
+            .then(res => {
+                dispatchGroceries({
+                    type: 'DELETE_GROCERY_ITEM',
+                    id: res.data
+                })
+            })
+            .finally(() => setLoadingGroceries(false))
+    }
+
     const displayActions = () => {
         if (editing) {
             return (
                 <>
-                    <Button color="success" size="sm" outline className="mr-2">
+                    <Button color="success" size="sm" outline className="mr-2" onClick={() => dispatchGroceries({ type: 'UPDATE_GROCERY_ITEM', item: grocery })}>
                         <FontAwesomeIcon icon={faCheck} />
                     </Button>
                     <Button color="danger" size="sm" outline  onClick={() => setEditing(false)}>

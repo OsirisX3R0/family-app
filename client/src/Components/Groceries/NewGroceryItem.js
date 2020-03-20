@@ -51,7 +51,7 @@ const NewGroceryItem = () => {
                     <Col>
                         <FormGroup>
                             <Label>Category</Label>
-                            <Input type="select" name="type" onChange={updateNew}>
+                            <Input type="select" name="category" onChange={updateNew}>
                                 {groceryTypes.map(type => (
                                     <option key={type._id} value={type._id}>{type.name}</option>
                                 ))}

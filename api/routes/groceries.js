@@ -6,8 +6,13 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 // Get grocery list
 router.get('/', async (req, res) => {
-    let groceryList = await Groceries.find({})
-        .populate('category');
+    let groceryList = await Groceries.find({}, (err, groceries) => {
+        if (err) res.send(err);
+
+        //groceries.populate('category');
+    });
+        // .exec()
+        // .populate('category');
     // .aggregate()
     // .match({})
     // .group({ _id: "$type", "total": { $sum: "$price" } })
@@ -17,7 +22,11 @@ router.get('/', async (req, res) => {
 
 // Get grocery types
 router.get('/groceryTypes', async (req, res) => {        
-    let groceryTypes = await GroceryType.find({});
+    let groceryTypes = await GroceryType.find({}, (err, groceries) => {
+        if (err) res.send(err);
+        
+        //groceries.populate('category');
+    });
     res.json(groceryTypes);
 })
 
