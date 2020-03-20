@@ -33,12 +33,11 @@ router.post('/', async (req, res) => {
         name: req.body.name,
         price: req.body.price,
         category: new ObjectId(req.body.category)
-    })
-    .populate('category');
-
+    });
+    newGrocery = await newGrocery.populate('category').execPopulate()
     await newGrocery.save()
     
-    return res.status(201).json(newGrocery/*.populate('category')*/);
+    return res.status(201).json(newGrocery);
 })
 
 // Delete a grocery item
