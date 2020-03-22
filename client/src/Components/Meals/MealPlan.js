@@ -1,12 +1,10 @@
 import React, { useEffect, useContext } from 'react';
 import { GlobalContext } from '../../Context/GlobalContext';
+import useActivePage from '../../Hooks/useActivePage';
 
 const MealPlan = () => {
-    const { setActivePage } = useContext(GlobalContext);
-
-    useEffect(() => {
-        setActivePage('Meals')
-    }, [])
+    useActivePage('Meals');
+    
     return <h2>Meal Plan</h2>
 }
 

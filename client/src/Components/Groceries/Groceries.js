@@ -4,15 +4,13 @@ import { GlobalContext } from '../../Context/GlobalContext';
 import { GroceryProvider } from '../../Context/GroceryContext';
 import NewGroceryItem from './NewGroceryItem';
 import GroceryList from './GroceryList';
+import useActivePage from '../../Hooks/useActivePage';
 
 import { getGroceryList, getGroceryTypes, addGrocery, deleteGrocery } from '../../Services/groceryService';
 
-const Groceries = () => {
-    const { setActivePage } = useContext(GlobalContext);
+const Groceries = () => {    
+    useActivePage('Groceries');
 
-    useEffect(() => {
-        setActivePage('Groceries')
-    }, [])
     return (
         <>
             <GroceryProvider>
