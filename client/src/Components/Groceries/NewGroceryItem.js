@@ -44,14 +44,14 @@ const NewGroceryItem = () => {
                 <Row form>
                     <Col md="12" className="col">
                         <FormGroup>
-                            <Label>Name</Label>
-                            <Input type="text" name="name" onChange={updateNew} />
+                            <Label htmlFor="name">Name</Label>
+                            <Input type="text" name="name" id="name" onChange={updateNew} />
                         </FormGroup>
                     </Col>
                     <Col md="12" className="col">
                         <FormGroup>
-                            <Label>Category</Label>
-                            <Input type="select" name="category" onChange={updateNew}>
+                            <Label htmlFor="category">Category</Label>
+                            <Input type="select" name="category" id="category" onChange={updateNew}>
                                 {groceryTypes.map(type => (
                                     <option key={type._id} value={type._id}>{type.name}</option>
                                 ))}
@@ -60,8 +60,8 @@ const NewGroceryItem = () => {
                     </Col>
                     <Col md="12" className="col">
                         <FormGroup>
-                            <Label>Price</Label>
-                            <Input type="number" name="price" step="0.01" onChange={updateNew} />
+                            <Label htmlFor="price">Price</Label>
+                            <Input type="number" name="price" id="price" step="0.01" onChange={updateNew} />
                         </FormGroup>
                     </Col>
                     <Col xs="auto" className="d-flex d-md-none align-items-center">

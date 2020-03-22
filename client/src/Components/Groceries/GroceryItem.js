@@ -5,6 +5,7 @@ import { faPencilAlt, faTimes, faTrash, faCheck } from '@fortawesome/free-solid-
 import { GroceryContext } from '../../Context/GroceryContext';
 import { updateGroceryItem, deleteGrocery } from '../../Services/groceryService';
 import { set } from 'mongoose';
+
 const GroceryItem = ({ grocery }) => {
     const { 
         setLoadingGroceries,
