@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useReducer } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalTheme = createGlobalStyle`
@@ -28,22 +28,40 @@ const GlobalTheme = createGlobalStyle`
         background-color: ${props => (props.dark ? '#444445' : '#f7f7f9')};
         border-color: ${props => (props.dark ? 'rgba(255, 255, 255, 0.25)' : '#ced4da')};
     }
+
+    .bottom-nav {
+        background-color: ${props => props.dark ? '#444445' : '#f8f9fa'};
+    }
 `;
+
+
 
 export const GlobalContext = createContext();
 
+const settingsReducer = (state, action) => {
+    switch(action.type) {
+        case 'SET_THEME':
+            return {...state, theme: action.theme}
+        default:
+            return state;
+    }
+}
+
 export const GlobalProvider = ({ children }) => {
     const [activePage, setActivePage] = useState(null);
-    const [theme, setTheme] = useState(null);
+    const [settings, dispatchSettings] = useReducer(settingsReducer, {
+        theme: 'light'
+    });
+    //const [theme, setTheme] = useState(null);
 
     return (
         <GlobalContext.Provider value={{
             activePage,
             setActivePage,
-            theme,
-            setTheme
+            settings, 
+            dispatchSettings
         }}>
-            <GlobalTheme dark={false} />
+            <GlobalTheme dark={settings.theme == 'dark'} />
             {children}
         </GlobalContext.Provider>
     )

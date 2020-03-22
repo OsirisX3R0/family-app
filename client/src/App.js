@@ -3,6 +3,7 @@ import { Route } from 'react-router';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Groceries from './Components/Groceries/Groceries';
 import MealPlan from './Components/Meals/MealPlan';
+import Settings from './Components/Settings/Settings';
 import './App.scss';
 import Layout from './Components/Layout/Layout';
 import { GlobalProvider } from './Context/GlobalContext';
@@ -14,8 +15,9 @@ function App() {
     <GlobalProvider>
       <Layout>
         <Route exact path="/" component={Dashboard} />
-        <Route exact path="/groceries" component={Groceries} />
-        <Route exact path="/meals" component={MealPlan} />
+        <Route path="/groceries" component={Groceries} />
+        <Route path="/meals" component={MealPlan} />
+        <Route path="/settings" component={Settings} />
       </Layout>      
     </GlobalProvider>
   );

@@ -6,10 +6,10 @@ import { faShoppingBag, faHamburger } from '@fortawesome/free-solid-svg-icons';
 import { GlobalContext } from '../../Context/GlobalContext';
 
 const BottomNav = () => {
-    const { activePage } = useContext(GlobalContext);
+    const { settings, activePage } = useContext(GlobalContext);
 
     return (
-        <Navbar color="light" className="bottom-nav">
+        <Navbar className="bottom-nav">
             <Nav>
                 <NavItem>
                     <Link to="/meals" className={activePage == 'Meals' ? 'active' : ''}>
