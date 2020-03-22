@@ -50,7 +50,7 @@ const settingsReducer = (state, action) => {
 export const GlobalProvider = ({ children }) => {
     const [activePage, setActivePage] = useState(null);
     const [settings, dispatchSettings] = useReducer(settingsReducer, {
-        theme: 'light'
+        theme: 'dark'
     });
     //const [theme, setTheme] = useState(null);
 

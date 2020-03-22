@@ -1,7 +1,7 @@
 .navbar {
   &.bottom-nav {
     width: 100%;
-    position: fixed;
+    position: sticky;
     bottom: 0;
 
     a {
@@ -26,4 +26,11 @@
       justify-content: space-evenly;
     }
   }
+}
+
+.grocery-save {
+  text-align: center;
+  position: sticky;
+  top: .25rem;
+  z-index: 10;
 }

@@ -1,10 +1,9 @@
 import React, { useState, useContext, useRef } from 'react';
 import { Label, Button, ListGroupItem, Row, Col, Input, CustomInput, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTimes, faTrash, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTimes, faTrash, faCheck, faSave } from '@fortawesome/free-solid-svg-icons';
 import { GroceryContext } from '../../Context/GroceryContext';
 import { updateGroceryItem, deleteGrocery } from '../../Services/groceryService';
-import { set } from 'mongoose';
 
 const GroceryItem = ({ grocery }) => {
     const { 
@@ -13,6 +12,7 @@ const GroceryItem = ({ grocery }) => {
      } = useContext(GroceryContext);
     const [editing, setEditing] = useState(false);
     const prevGrocery = useRef(grocery);
+    const nameInput = useRef(null);
 
     const itemChange = e => {
         dispatchGroceries({ type: 'UPDATE_GROCERY_ITEM', item: {
@@ -32,6 +32,11 @@ const GroceryItem = ({ grocery }) => {
             })
     }
 
+    // const openEdit = () => {
+    //     setEditing(true);
+    //     nameInput.current.focus();
+    // }
+
     const closeEdit = () => {
         setEditing(false);
         dispatchGroceries({ type: 'UPDATE_GROCERY_ITEM', item: prevGrocery.current });
@@ -50,12 +55,18 @@ const GroceryItem = ({ grocery }) => {
             .finally(() => setLoadingGroceries(false))
     }
 
+    const setChecked = (e) => {dispatchGroceries({ type: 'UPDATE_GROCERY_ITEM', item: {
+            ...grocery,
+            checked: e.target.checked
+        }});
+    }
+
     const displayItem = () => {
         let price = +grocery.price;
         if (editing) {
             return (
                 <>
-                    <Col><Input value={grocery.name} name="name" onChange={itemChange} /></Col>
+                    <Col><Input value={grocery.name} name="name" onChange={itemChange}  /></Col>
                     <Col className="text-right">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
@@ -103,19 +114,21 @@ const GroceryItem = ({ grocery }) => {
     }
 
     return (
-        <ListGroupItem key={grocery._id}>
-            <Row>
-                <Col xs="1">
-                    <Label check>
-                        <CustomInput id="item1" type="checkbox" />
-                    </Label>
-                </Col>
-                {displayItem()}
-                <Col xs="auto">
-                    {displayActions()}
-                </Col>
-            </Row>
-        </ListGroupItem>
+        <>
+            <ListGroupItem key={grocery._id}>
+                <Row>
+                    <Col xs="1">
+                        <Label check>
+                            <CustomInput type="checkbox" id={grocery._id} value={grocery.checked} onChange={setChecked} />
+                        </Label>
+                    </Col>
+                    {displayItem()}
+                    <Col xs="auto">
+                        {displayActions()}
+                    </Col>
+                </Row>
+            </ListGroupItem>
+        </>
     )
 }
 

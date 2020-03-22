@@ -11,7 +11,7 @@ export const getGroceryList = () => {
 }
 
 export const getGroceryTypes = () => {
-    return axios.get(`${url}/groceryTypes`)
+    return axios.get(`${url}/groceryTypes`);
 }
 
 export const addGrocery = item => {
@@ -19,7 +19,11 @@ export const addGrocery = item => {
 }
 
 export const updateGroceryItem = item => {
-    return axios.put(`${url}/${item._id}`, item)
+    return axios.put(`${url}/${item._id}`, item);
+}
+
+export const saveChecked = items => {
+    return axios.put(`${url}/save`, { items: items});
 }
 
 export const deleteGrocery = id => {

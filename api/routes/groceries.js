@@ -36,13 +36,24 @@ router.post('/', async (req, res) => {
 
 // Update a grocery item
 router.put('/:id', async (req, res) => {
-    let updatedItem = Groceries.findByIdAndUpdate({ _id: req.body._id }, req.body).exec((err) => {
+    let updatedItem = Groceries.findByIdAndUpdate({ _id: req.body._id }, req.body).exec(err => {
         if (err) res.send(err)
 
         return res.send(updatedItem);
     })
 
     //await updatedItem.save()
+})
+
+// Save checked items
+router.put('/save', async (req, res) => {
+    req.body.items.forEach(item => {
+        Groceries.findByIdAndUpdate({ _id: item._id }, item).exec(err => {
+            if (err) res.send(err)
+        })
+    })
+
+    return res.status(200);
 })
 
 // Delete a grocery item
