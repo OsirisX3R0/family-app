@@ -1,21 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { Label, Button, ListGroupItem, Row, Col, Input, CustomInput, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTimes, faTrash, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { GroceryContext } from '../../Context/GroceryContext';
 import { updateGroceryItem, deleteGrocery } from '../../Services/groceryService';
+import { set } from 'mongoose';
 const GroceryItem = ({ grocery }) => {
     const { 
         setLoadingGroceries,
         dispatchGroceries
      } = useContext(GroceryContext);
     const [editing, setEditing] = useState(false);
+    const prevGrocery = useRef(grocery);
 
     const itemChange = e => {
         dispatchGroceries({ type: 'UPDATE_GROCERY_ITEM', item: {
             ...grocery,
             [e.target.name]: e.target.value
-        }})
+        }});
     }
 
     const updateItem = item => {
@@ -27,6 +29,11 @@ const GroceryItem = ({ grocery }) => {
                 setLoadingGroceries(false);
                 setEditing(false);
             })
+    }
+
+    const closeEdit = () => {
+        setEditing(false);
+        dispatchGroceries({ type: 'UPDATE_GROCERY_ITEM', item: prevGrocery.current });
     }
 
     const removeItem = id => {
@@ -75,7 +82,7 @@ const GroceryItem = ({ grocery }) => {
                     <Button color="success" size="sm" outline className="mr-2" onClick={() => updateItem(grocery)}>
                         <FontAwesomeIcon icon={faCheck} />
                     </Button>
-                    <Button color="danger" size="sm" outline  onClick={() => setEditing(false)}>
+                    <Button color="danger" size="sm" outline  onClick={() => closeEdit()}>
                         <FontAwesomeIcon icon={faTimes} />
                     </Button>
                 </>
