@@ -14,6 +14,8 @@ const groceryReducer = (state, action) => {
             return [...state.map(g => g._id == action.item._id ? action.item : g)]
         case 'DELETE_GROCERY_ITEM':
             return [...state.filter(g => g._id != action.id)];
+        case 'CLEAR_GROCERY_LIST':
+            return [];
         default:
             return state;
     }
@@ -28,11 +30,25 @@ const newItemReducer = (state, action) => {
     }
 }
 
+// const changeReducer = (state, action) => {
+//     switch(action.type) {
+//         case 'ADD CHANGE':
+//             return [...state, action.change]
+//         default:
+//             return state;
+//     }
+// }
+
 export const GroceryProvider = ({ children }) => {
     const [groceryList, dispatchGroceries] = useReducer(groceryReducer, []);
     const [groceryTypes, setGroceryTypes] = useState([]);
-    const [newItem, dispatchNewItem] = useReducer(newItemReducer, {});
+    const [newItem, dispatchNewItem] = useReducer(newItemReducer, {
+        name: '',
+        category: '',
+        price: 0
+    });
     const [loadingGroceries, setLoadingGroceries] = useState(false);
+    // const [changes, setChanges] = useState([]);//useReducer(changeReducer, [])
 
     useEffect(() => {
         setLoadingGroceries(true);
@@ -44,7 +60,7 @@ export const GroceryProvider = ({ children }) => {
                     type: 'UPDATE',
                     newItem: {
                         name: '',
-                        type: res.data[0]._id,
+                        category: res.data[0]._id,
                         price: 0
                     }
                 })
@@ -78,7 +94,9 @@ export const GroceryProvider = ({ children }) => {
             newItem,
             dispatchNewItem,
             loadingGroceries,
-            setLoadingGroceries
+            setLoadingGroceries,
+            // changes, 
+            // setChanges
         }}>
             {children}
         </GroceryContext.Provider>

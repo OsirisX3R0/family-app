@@ -3,14 +3,19 @@ import { Label, Button, ListGroupItem, Row, Col, Input, CustomInput, InputGroup,
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTimes, faTrash, faCheck, faSave } from '@fortawesome/free-solid-svg-icons';
 import { GroceryContext } from '../../Context/GroceryContext';
-import { updateGroceryItem, deleteGrocery } from '../../Services/groceryService';
+import { updateGroceryItem, saveChecked, deleteGrocery } from '../../Services/groceryService';
+import BlockUi from 'react-block-ui';
+import Loader from '../Layout/Loader';
 
 const GroceryItem = ({ grocery }) => {
     const { 
         setLoadingGroceries,
-        dispatchGroceries
+        dispatchGroceries, 
+        changes,
+        setChanges
      } = useContext(GroceryContext);
     const [editing, setEditing] = useState(false);
+    const [savingItem, setSavingItem] = useState(false);
     const prevGrocery = useRef(grocery);
     const nameInput = useRef(null);
 
@@ -55,10 +60,15 @@ const GroceryItem = ({ grocery }) => {
             .finally(() => setLoadingGroceries(false))
     }
 
-    const setChecked = (e) => {dispatchGroceries({ type: 'UPDATE_GROCERY_ITEM', item: {
+    const setChecked = (e) => {
+        setSavingItem(true)
+        dispatchGroceries({ type: 'UPDATE_GROCERY_ITEM', item: {
             ...grocery,
             checked: e.target.checked
         }});
+        saveChecked(grocery._id, e.target.checked)
+            .finally(() => setSavingItem(false))
+        //setChanges([...changes, {...grocery, checked: e.target.checked}])
     }
 
     const displayItem = () => {
@@ -114,12 +124,12 @@ const GroceryItem = ({ grocery }) => {
     }
 
     return (
-        <>
+        <BlockUi blocking={savingItem}>
             <ListGroupItem key={grocery._id}>
                 <Row>
                     <Col xs="1">
                         <Label check>
-                            <CustomInput type="checkbox" id={grocery._id} value={grocery.checked} onChange={setChecked} />
+                            <CustomInput type="checkbox" id={grocery._id} checked={grocery.checked} onChange={setChecked} />
                         </Label>
                     </Col>
                     {displayItem()}
@@ -128,7 +138,7 @@ const GroceryItem = ({ grocery }) => {
                     </Col>
                 </Row>
             </ListGroupItem>
-        </>
+        </BlockUi>
     )
 }
 

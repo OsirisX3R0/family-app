@@ -26,7 +26,10 @@ const NewGroceryItem = () => {
                     item: res.data
                 })
             })
-            .finally(() => setLoadingGroceries(false))
+            .finally(() => {
+                resetNewItem();
+                setLoadingGroceries(false);
+            })
     }
 
     const updateNew = (e) => {
@@ -39,19 +42,30 @@ const NewGroceryItem = () => {
         })
     }
 
+    const resetNewItem = () => {
+        dispatchNewItem({
+            type: 'UPDATE',
+            newItem: {
+                name: '',
+                category: groceryTypes[0]._id,
+                price: 0
+            }
+        })
+    }
+
     return (
         <Form onSubmit={addNew}>
                 <Row form>
                     <Col md="12" className="col">
                         <FormGroup>
                             <Label htmlFor="name">Name</Label>
-                            <Input type="text" name="name" id="name" onChange={updateNew} />
+                            <Input type="text" name="name" id="name" value={newItem.name} onChange={updateNew} />
                         </FormGroup>
                     </Col>
                     <Col md="12" className="col">
                         <FormGroup>
                             <Label htmlFor="category">Category</Label>
-                            <Input type="select" name="category" id="category" onChange={updateNew}>
+                            <Input type="select" name="category" id="category" value={newItem.category} onChange={updateNew}>
                                 {groceryTypes.map(type => (
                                     <option key={type._id} value={type._id}>{type.name}</option>
                                 ))}
@@ -61,7 +75,7 @@ const NewGroceryItem = () => {
                     <Col md="12" className="col">
                         <FormGroup>
                             <Label htmlFor="price">Price</Label>
-                            <Input type="number" name="price" id="price" step="0.01" onChange={updateNew} />
+                            <Input type="number" name="price" id="price" step="0.01" value={newItem.price} onChange={updateNew} />
                         </FormGroup>
                     </Col>
                     <Col xs="auto" className="d-flex d-md-none align-items-center">
@@ -74,6 +88,7 @@ const NewGroceryItem = () => {
                             <FontAwesomeIcon icon={faPlus} />
                             Add
                         </Button>
+                        {/* <Button color="secondary" type="reset" onClick={() => resetNewItem()}>Reset</Button> */}
                     </Col>
                 </Row>
                 

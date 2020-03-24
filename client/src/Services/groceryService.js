@@ -22,10 +22,14 @@ export const updateGroceryItem = item => {
     return axios.put(`${url}/${item._id}`, item);
 }
 
-export const saveChecked = items => {
-    return axios.put(`${url}/save`, { items: items});
+export const saveChecked = (id, checked) => {
+    return axios.put(`${url}/check/${id}`, { checked });
 }
 
 export const deleteGrocery = id => {
     return axios.delete(`${url}/${id}`);
+}
+
+export const clearGroceryList = () => {
+    return axios.delete(url)
 }

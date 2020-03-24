@@ -45,22 +45,42 @@ router.put('/:id', async (req, res) => {
     //await updatedItem.save()
 })
 
-// Save checked items
-router.put('/save', async (req, res) => {
-    req.body.items.forEach(item => {
-        Groceries.findByIdAndUpdate({ _id: item._id }, item).exec(err => {
-            if (err) res.send(err)
-        })
-    })
+// Check/uncheck
+router.put('/check/:id', async (req, res) => {
+    await Groceries.findById(req.params.id, (err, item) => {
+        if (err) res.send(err)
 
-    return res.status(200);
+        item.checked = req.body.checked;
+        item.save();
+        return res.send(item);
+    })
 })
+
+// Save checked items
+// router.put('/save', async (req, res) => {
+//     req.body.items.forEach(item => {
+//         Groceries.findByIdAndUpdate({ _id: item._id }, item).exec(err => {
+//             if (err) res.send(err)
+//         })
+//     })
+
+//     return res.status(200);
+// })
 
 // Delete a grocery item
 router.delete('/:id', async (req, res) => {
     await Groceries.deleteOne({ _id: req.params.id })
 
     return res.send(req.params.id)
+})
+
+// Clear grocery list
+router.delete('/', async (req, res) => {
+    await Groceries.deleteMany({}).exec(err => {
+        if (err) res.send(err);
+
+        return res.send("Grocery list cleared");
+    })
 })
 
 module.exports = router;

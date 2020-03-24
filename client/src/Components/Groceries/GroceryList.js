@@ -1,37 +1,89 @@
-import React, { useContext } from 'react';
-import { ListGroup, Button } from 'reactstrap';
+import React, { useContext, useCallback } from 'react';
+import { ListGroup, Button, ListGroupItem } from 'reactstrap';
 import BlockUI from 'react-block-ui';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
+import { faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../Layout/Loader';
 import { GroceryContext } from '../../Context/GroceryContext';
 import GroceryItem from './GroceryItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { saveChecked, clearGroceryList } from '../../Services/groceryService';
+import useLocalStorage from '../../Hooks/useLocalStorage';
+
+const NoItems = styled(ListGroupItem)`
+    font-weight: bold;
+    text-align: center;
+`;
 
 const GroceryList = () => {
     const { 
         groceryList,
-        loadingGroceries } = useContext(GroceryContext);
+        dispatchGroceries,
+        loadingGroceries,
+        setLoadingGroceries,
+        changes
+    } = useContext(GroceryContext);
+    //const [checked, setChecked] = useLocalStorage('checked');
 
-    const displaySave = () => {
-        if (!loadingGroceries) {
+    // const setItemChecked = id => setChecked([...checked, id])
+
+    // const isChecked = useCallback(item => checked.includes(item._id)) 
+
+    // const saveChanges = () => {
+    //     setLoadingGroceries(true)
+    //     saveChecked(changes)
+    //         .then(res => {
+    //             console.log(res)
+    //         })
+    //         .finally(() => setLoadingGroceries(false))
+    // }
+
+    const clearList = () => {        
+        setLoadingGroceries(true)
+        clearGroceryList()
+            .then(res => {
+                console.log(res)
+            })
+            .finally(() => {
+                dispatchGroceries({ type: 'CLEAR_GROCERY_LIST' })
+                setLoadingGroceries(false);
+            })
+    }
+
+    const displayClear = () => {
+        if (!loadingGroceries && groceryList.length > 0) {
             return (
                 <div className="grocery-save">                    
-                    <Button color="primary">
+                    {/* <Button color="primary" onClick={() => saveChanges()}>
                         <FontAwesomeIcon icon={faSave} />
                         &nbsp; Save Items
+                    </Button>                 */}
+                    <Button color="danger" onClick={() => clearList()}>
+                        <FontAwesomeIcon icon={faTrash} />
+                        &nbsp; Clear List
                     </Button>
                 </div>
             )
         }
     }
 
+    const displayList = () => {
+        if (groceryList && groceryList.length > 0) {
+            return groceryList && groceryList.map(grocery => (
+                <GroceryItem grocery={grocery} key={grocery._id} />
+            ))
+        }
+
+        return (
+            <NoItems>The grocery list is empty</NoItems>
+        )
+    }
+
     return (
         <BlockUI blocking={loadingGroceries} loader={<Loader />}>            
-            {displaySave()}
+            {displayClear()}
             <ListGroup>
-                {groceryList && groceryList.map(grocery => (
-                    <GroceryItem grocery={grocery} key={grocery._id} />
-                ))}
+                {displayList()}
             </ListGroup>
         </BlockUI>
     )
