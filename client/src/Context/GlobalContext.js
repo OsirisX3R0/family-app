@@ -61,7 +61,7 @@ export const GlobalProvider = ({ children }) => {
             settings, 
             dispatchSettings
         }}>
-            <GlobalTheme dark={settings.theme == 'dark'} />
+        <GlobalTheme dark={settings.theme == 'dark'} />
             {children}
         </GlobalContext.Provider>
     )

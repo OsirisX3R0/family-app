@@ -15,6 +15,14 @@ const NoItems = styled(ListGroupItem)`
     text-align: center;
 `;
 
+const ListTools = styled.div`
+    text-align: center;
+    margin-bottom: 1rem;
+    position: sticky;
+    top: .25rem;
+    z-index: 10;
+`;
+
 const GroceryList = () => {
     const { 
         groceryList,
@@ -53,7 +61,7 @@ const GroceryList = () => {
     const displayClear = () => {
         if (!loadingGroceries && groceryList.length > 0) {
             return (
-                <div className="grocery-save">                    
+                <ListTools>                    
                     {/* <Button color="primary" onClick={() => saveChanges()}>
                         <FontAwesomeIcon icon={faSave} />
                         &nbsp; Save Items
@@ -62,21 +70,23 @@ const GroceryList = () => {
                         <FontAwesomeIcon icon={faTrash} />
                         &nbsp; Clear List
                     </Button>
-                </div>
+                </ListTools>
             )
         }
     }
 
     const displayList = () => {
-        if (groceryList && groceryList.length > 0) {
-            return groceryList && groceryList.map(grocery => (
-                <GroceryItem grocery={grocery} key={grocery._id} />
-            ))
+        if (!loadingGroceries) {
+            if (groceryList && groceryList.length > 0) {
+                return groceryList && groceryList.map(grocery => (
+                    <GroceryItem grocery={grocery} key={grocery._id} />
+                ))
+            }
+    
+            return (
+                <NoItems>The grocery list is empty</NoItems>
+            )
         }
-
-        return (
-            <NoItems>The grocery list is empty</NoItems>
-        )
     }
 
     return (

@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import { Row, Col, Label, Input } from 'reactstrap';
 import { GlobalContext } from '../../Context/GlobalContext';
+import useActivePage from '../../Hooks/useActivePage';
 
 const Settings = () => {
     const { settings, dispatchSettings } = useContext(GlobalContext);
+    useActivePage(null);
     
     return (
         <Row>
