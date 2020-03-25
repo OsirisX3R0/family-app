@@ -18,6 +18,8 @@ const NoItems = styled(ListGroupItem)`
 const ListTools = styled.div`
     text-align: center;
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
     position: sticky;
     top: .25rem;
     z-index: 10;
@@ -66,7 +68,11 @@ const GroceryList = () => {
                         <FontAwesomeIcon icon={faSave} />
                         &nbsp; Save Items
                     </Button>                 */}
-                    <Button color="danger" onClick={() => clearList()}>
+                    <Button color="danger" className="d-none d-md-block" onClick={() => clearList()}>
+                        <FontAwesomeIcon icon={faTrash} />
+                        &nbsp; Clear List
+                    </Button>
+                    <Button color="danger" className="d-block d-md-none" block onClick={() => clearList()}>
                         <FontAwesomeIcon icon={faTrash} />
                         &nbsp; Clear List
                     </Button>
