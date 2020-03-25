@@ -8,7 +8,6 @@ import { GroceryContext } from '../../Context/GroceryContext';
 import GroceryItem from './GroceryItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { saveChecked, clearGroceryList } from '../../Services/groceryService';
-import useLocalStorage from '../../Hooks/useLocalStorage';
 
 const NoItems = styled(ListGroupItem)`
     font-weight: bold;
