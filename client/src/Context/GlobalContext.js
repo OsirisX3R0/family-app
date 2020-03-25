@@ -1,5 +1,6 @@
 import React, { useState, createContext, useReducer } from 'react';
 import { createGlobalStyle } from 'styled-components';
+import settingsReducer from '../Reducers/settingsReducer';
 
 const GlobalTheme = createGlobalStyle`
     body {
@@ -30,25 +31,13 @@ const GlobalTheme = createGlobalStyle`
     }
 `;
 
-
-
 export const GlobalContext = createContext();
-
-const settingsReducer = (state, action) => {
-    switch(action.type) {
-        case 'SET_THEME':
-            return {...state, theme: action.theme}
-        default:
-            return state;
-    }
-}
 
 export const GlobalProvider = ({ children }) => {
     const [activePage, setActivePage] = useState(null);
     const [settings, dispatchSettings] = useReducer(settingsReducer, {
         theme: 'dark'
     });
-    //const [theme, setTheme] = useState(null);
 
     return (
         <GlobalContext.Provider value={{
