@@ -8,23 +8,10 @@ import { GroceryContext } from '../../Context/GroceryContext';
 import GroceryItem from './GroceryItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { saveChecked, clearGroceryList } from '../../Services/groceryService';
-
-const NoItems = styled(ListGroupItem)`
-    font-weight: bold;
-    text-align: center;
-`;
-
-const ListTools = styled.div`
-    text-align: center;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: center;
-    position: sticky;
-    top: .25rem;
-    z-index: 10;
-`;
+import useStyledComponents from '../../Hooks/useStyledComponents';
 
 const GroceryList = () => {
+    const { NoItems, ListTools } = useStyledComponents();
     const { 
         groceryList,
         dispatchGroceries,

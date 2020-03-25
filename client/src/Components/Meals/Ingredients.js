@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Ingredient from './Ingredient';
 import { GlobalContext } from '../../Context/GlobalContext';
-import useMealPlanStyles from './styles';
+import useStyledComponents from '../../Hooks/useStyledComponents';
 
 const Ingredients = () => {
     const { settings } = useContext(GlobalContext);
     const [newIngredient, setNewIngredient] = useState('');
     const [addingIngredient, setAddingIngredient] = useState(false);
-    const { IngredientList, IngredientListItem, AddIngredientLink, NewIngredientInput } = useMealPlanStyles();
+    const { IngredientList, IngredientListItem, AddIngredientLink, NewIngredientInput } = useStyledComponents();
 
     const displayAddNew = () => {
         if (!addingIngredient) {

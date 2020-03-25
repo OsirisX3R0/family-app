@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { Col, Card, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import { GlobalContext } from '../../Context/GlobalContext';
 import Ingredients from './Ingredients';
-import useMealPlanStyles from './styles';
+import useStyledComponents from '../../Hooks/useStyledComponents';
 
 const Meal = () => {
     const { settings } = useContext(GlobalContext);
-    const { MealCard, MealTitle, Description } = useMealPlanStyles();
+    const { MealCard, MealTitle, Description } = useStyledComponents();
 
     return (
-        <Col sm="6" md="4" lg="3" xl="2">
+        <Col sm="6" md="4" lg="3">
             <MealCard>
                 <CardBody>
                     <MealTitle>Meal Title</MealTitle>
